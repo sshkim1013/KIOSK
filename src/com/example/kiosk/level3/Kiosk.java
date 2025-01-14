@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 //키오스크 프로그램의 메뉴를 관리하고 사용자 입력을 처리
 public class Kiosk {
-    //MenuItem을 관리하는 리스트가 필드로 존재
+    //MenuItem 관리하는 리스트가 필드로 존재
     List<MenuItem> menuItems = new ArrayList<>();
 
     MenuItem menuItem1;
