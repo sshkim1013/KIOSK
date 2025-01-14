@@ -40,19 +40,23 @@ public class Kiosk {
                             System.out.println();
 
                             System.out.print("메뉴를 선택해 주세요: ");
-                            int menuNo = sc.nextInt();
-                            System.out.println();
+                            try {
+                                int menuNo = sc.nextInt();
+                                System.out.println();
 
-                            if (menuNo == 0) {
-                                System.out.println("MAIN MENU 페이지로 이동합니다.");
-                                System.out.println();
-                                break;  //0 입력 시 무한 루프 탈출
-                            } else if (menuNo > 0 && menuNo <= selectedCategory.items.size()) {
-                                System.out.println("선택한 메뉴: " + selectedCategory.items.get(menuNo - 1));
-                                System.out.println();
-                                break;  //조건에 부합하는 숫자 입력 시 무한 루프 탈출
-                            } else {
-                                System.out.println("다른 메뉴를 선택해 주세요 :)");
+                                if (menuNo == 0) {
+                                    System.out.println("MAIN MENU 페이지로 이동합니다.");
+                                    System.out.println();
+                                    break;  //0 입력 시 무한 루프 탈출
+                                } else if (menuNo > 0 && menuNo <= selectedCategory.items.size()) {
+                                    System.out.println("선택한 메뉴: " + selectedCategory.items.get(menuNo - 1));
+                                    System.out.println();
+                                    break;  //조건에 부합하는 숫자 입력 시 무한 루프 탈출
+                                } else {
+                                    throw new IllegalArgumentException("다른 메뉴를 선택해 주세요 :)");
+                                }
+                            } catch (IllegalArgumentException e) {
+                                System.out.println(e.getMessage());
                                 System.out.println();
                             }
                         }
