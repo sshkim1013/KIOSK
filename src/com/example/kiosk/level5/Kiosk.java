@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class Kiosk {
     private final List<Menu> menus;
-
-    //Scanner 선언
     Scanner sc = new Scanner(System.in);
 
     public Kiosk(Menu burger, Menu beverage, Menu dessert) {

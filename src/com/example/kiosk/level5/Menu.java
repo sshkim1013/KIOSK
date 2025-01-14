@@ -5,10 +5,11 @@ import java.util.List;
 
 //MenuItem 관리 클래스
 public class Menu {
-    private List<MenuItem> items = new ArrayList<>();
+    private final List<MenuItem> items ;
     private final String categoryName;    //상위 카테고리 이름
 
     public Menu(String categoryName) {
+        items = new ArrayList<>();
         this.categoryName = categoryName;
     }
 

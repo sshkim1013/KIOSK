@@ -21,8 +21,8 @@ public class Main {
         dessertMenu.getItems().add(new MenuItem("CheeseBall", "W 4.5","치즈볼"));
 
 
-        //Kiosk 객체 생성
+        //Kiosk 객체 생성 및 실행
         Kiosk kiosk = new Kiosk(burgerMenu, drinkMenu, dessertMenu);
-        kiosk.start();  //Kiosk 실행
+        kiosk.start();
     }
 }
