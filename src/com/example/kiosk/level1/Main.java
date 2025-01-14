@@ -16,7 +16,7 @@ public class Main {
         System.out.println("0. 종료   | 종료");
         System.out.println();
 
-        //주문 횟수
+        //주문 횟수 카운트
         int orderCount = 0;
 
         //메뉴 선택을 위한 반복문 구현
