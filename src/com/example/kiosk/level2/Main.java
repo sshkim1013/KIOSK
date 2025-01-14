@@ -24,7 +24,7 @@ public class Main {
         MenuItem menuItem3 = new MenuItem("Cheeseburger", "W 6.9","포테이토 번과 비프패티, 치즈가 토핑된 치즈버거");
         MenuItem menuItem4 = new MenuItem("Hamburger", "W 5.4","비프패티를 기반으로 야채가 들어간 기본버거");
 
-        //add 함수를 통해 new MenuItem(이름, 가격, 설명) List에 삽입
+        //add 함수를 통해 new MenuItem(이름, 가격, 설명) 리스트에 삽입
         menuItems.add(menuItem1);
         menuItems.add(menuItem2);
         menuItems.add(menuItem3);
@@ -36,7 +36,7 @@ public class Main {
         //주문 횟수
         int orderCount = 0;
 
-        //반복문을 활용해 List 안에 있는 MenuItem을 하나씩 출력
+        //반복문을 활용해 List 안에 있는 MenuItem 하나씩 출력
         while (true) {
             if (orderCount == 0) {
                 System.out.print("주문 하실 메뉴의 번호를 입력해 주세요(종료는 0 입력): ");
