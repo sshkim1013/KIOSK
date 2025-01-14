@@ -23,6 +23,6 @@ public class Main {
 
         //Kiosk 객체 생성
         Kiosk kiosk = new Kiosk(burgerMenu, drinkMenu, dessertMenu);
-        kiosk.start();
+        kiosk.start();  //Kiosk 실행
     }
 }

@@ -1,6 +1,6 @@
 package com.example.kiosk.level4;
 
-//개별 음식 항목을 관리하는 클래스
+//개별 음식 항목 관리 클래스
 //햄버거, 음료수, 디저트 모두 관리
 public class MenuItem {
     String menuName;    //이름
