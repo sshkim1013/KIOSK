@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 
-//확인해주실 튜터님께 미리 죄송합니다. 코드가 생각보다 길어져서 조금 더럽습니다.
+//확인해주실 튜터님께 미리 죄송합니다. 아직까지도 코딩이 많이 미숙한 관계로
+// KIOSK 클래스의 코드가 생각보다 길어져서 조금 더럽습니다.
 public class Kiosk {
     private final List<Menu> menus;
     Scanner sc = new Scanner(System.in);
@@ -88,7 +89,12 @@ public class Kiosk {
                                                                 shoppingCart.showItemsInCart();
 
                                                                 System.out.println("[ Total Price ]");
-                                                                System.out.println(selectedCategory.getItems().get(menuNo - 1).getPrice());
+                                                                double totalPrice = 0;
+                                                                for (int i=0; i < shoppingCart.getCartList().size(); i++) {
+                                                                    totalPrice += priceParser(shoppingCart.getCartList().get(i).getPrice());
+                                                                }
+
+                                                                System.out.println("W " + totalPrice);
                                                                 System.out.println();
                                                                 System.out.println("1. 주문       2. 메뉴판");
 
@@ -97,7 +103,7 @@ public class Kiosk {
                                                                     System.out.println();
 
                                                                     if (order == 1) {
-                                                                        System.out.println("주문이 완료되었습니다. 금액은 " + selectedCategory.getItems().get(menuNo - 1).getPrice() + " 입니다.");
+                                                                        System.out.println("주문이 완료되었습니다. 총 금액은 " + totalPrice + " 입니다.");
                                                                         shoppingCart.emptyCart();   //주문을 마치면 카트 비우기.
                                                                         System.out.println();
                                                                         break;
@@ -161,5 +167,11 @@ public class Kiosk {
                 System.out.println();
             }
         }
+    }
+
+    //문자열 파싱 메서드.
+    public double priceParser(String price) {
+        String number = price.replaceAll("[^0-9.]", "");
+        return Double.parseDouble(number);
     }
 }
