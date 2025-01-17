@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+//확인해주실 튜터님께 미리 죄송합니다. 코드가 생각보다 길어져서 조금 더럽습니다.
 public class Kiosk {
     private final List<Menu> menus;
     Scanner sc = new Scanner(System.in);
@@ -114,6 +116,8 @@ public class Kiosk {
 
                                                         } else if (orderMenu == 5) {
                                                             System.out.println("진행 중인 주문을 취소합니다.");
+                                                            //주문 취소 시, 가장 최근에 장바구니에 넣었던 메뉴 삭제
+                                                            shoppingCart.getCartList().remove(shoppingCart.getCartList().size()-1);
                                                             System.out.println();
                                                             break;
                                                         } else {

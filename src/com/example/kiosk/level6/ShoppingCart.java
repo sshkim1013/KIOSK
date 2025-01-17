@@ -22,4 +22,8 @@ public class ShoppingCart {
     public void emptyCart() {
         cartList.clear();
     }
+
+    public List<MenuItem> getCartList() {
+        return cartList;
+    }
 }
