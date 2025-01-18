@@ -16,7 +16,7 @@ public enum UserType {
     //반올림 - String.format() 사용
     public String executeDiscount(double totalPrice) {
         double discountedPrice = totalPrice * (1 - (discountRate / 100.0));
-        return String.format("%.2f", discountedPrice);
+        return String.format("%.1f", discountedPrice);
     }
 
     public static UserType fromNumber(int discountInfo) {
