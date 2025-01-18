@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 
-//확인해주실 튜터님께 미리 죄송합니다. 아직까지도 코딩이 많이 미숙한 관계로
-// KIOSK 클래스의 코드가 생각보다 길어져서 조금 더럽습니다.
+//확인해주실 튜터님께 미리 죄송합니다.
+//아직까지도 코딩이 많이 미숙한 관계로 KIOSK 클래스의 코드가 생각보다 길어져서 조금 더럽습니다.
 public class Kiosk {
     private final List<Menu> menus;
     Scanner sc = new Scanner(System.in);
@@ -59,7 +59,6 @@ public class Kiosk {
                                     System.out.println();
 
                                     while (true) {
-                                        //장바구니 추가 여부 출력
                                         System.out.println(selectedCategory.getItems().get(menuNo - 1));
                                         System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                                         System.out.println("1. 확인       2. 취소");
@@ -103,10 +102,30 @@ public class Kiosk {
                                                                     System.out.println();
 
                                                                     if (order == 1) {
-                                                                        System.out.println("주문이 완료되었습니다. 총 금액은 " + totalPrice + " 입니다.");
-                                                                        shoppingCart.emptyCart();   //주문을 마치면 카트 비우기.
-                                                                        System.out.println();
+                                                                        while (true) {
+                                                                            System.out.println("할인 정보를 입력해주세요.");
+                                                                            System.out.println("1. 국가유공자 : 10%");
+                                                                            System.out.println("2. 군인 : 5%");
+                                                                            System.out.println("3. 학생 : 3%");
+                                                                            System.out.println("4. 일반 : 0%");
+
+                                                                            try {
+                                                                                int discountInfo = sc.nextInt();
+                                                                                System.out.println();
+
+                                                                                UserType userType = UserType.fromNumber(discountInfo);
+                                                                                String discounted = userType.executeDiscount(totalPrice);
+                                                                                System.out.println("주문이 완료되었습니다. 총 금액은 " + discounted + " 입니다.");
+                                                                                shoppingCart.emptyCart();   //주문을 마치면 카트 비우기.
+                                                                                System.out.println();
+                                                                                break;
+                                                                            } catch (IllegalArgumentException e) {
+                                                                                System.out.println(e.getMessage());
+                                                                                System.out.println();
+                                                                            }
+                                                                        }
                                                                         break;
+
                                                                     } else if (order == 2) {
                                                                         System.out.println("메뉴판으로 돌아갑니다.");
                                                                         break;
@@ -169,7 +188,7 @@ public class Kiosk {
         }
     }
 
-    //문자열 파싱 메서드.
+    //String(price) -> double 타입으로 파싱하는 메서드.
     public double priceParser(String price) {
         String number = price.replaceAll("[^0-9.]", "");
         return Double.parseDouble(number);
