@@ -5,8 +5,15 @@ import java.util.List;
 import java.util.Scanner;
 
 
-//확인해주실 튜터님께 미리 죄송합니다.
-//아직까지도 코딩이 많이 미숙한 관계로 KIOSK 클래스의 코드가 생각보다 길어져서 조금 더럽습니다.
+/*
+확인해주실 튜터님께 미리 죄송합니다.
+아직까지도 코딩이 많이 미숙한 관계로 KIOSK 클래스의 코드가 생각보다 길어져서,
+조금 많이 더티한 코드가 된 것 같습니다.
++
+콘솔 출력 디자인을 깔끔하게 하기 위해서
+System.out.println() 메서드를 중간중간 많이 삽입 하였습니다.
+*/
+
 public class Kiosk {
     private final List<Menu> menus;
     Scanner sc = new Scanner(System.in);
@@ -39,86 +46,102 @@ public class Kiosk {
                         System.out.println("KIOSK 프로그램을 종료합니다.");
                         break;
                     } else if (categoryNo > 0 && categoryNo <= menus.size()) {
-                        while (true) {
-                            System.out.println("[ " + menus.get(categoryNo - 1).getCategoryName().toUpperCase() + " MENU ]");
-                            Menu selectedCategory = menus.get(categoryNo - 1);
-                            selectedCategory.showMenuItems();
-                            System.out.println();
-
-                            System.out.print("메뉴를 선택해 주세요: ");
-                            try {
-                                int menuNo = sc.nextInt();
-                                System.out.println();
-
-                                if (menuNo == 0) {
-                                    System.out.println("MAIN MENU 페이지로 이동합니다.");
-                                    System.out.println();
-                                    break;  //0 입력 시 무한 루프 탈출
-                                } else if (menuNo > 0 && menuNo <= selectedCategory.getItems().size()) {
-                                    System.out.println("선택한 메뉴: " + selectedCategory.getItems().get(menuNo - 1));
-                                    System.out.println();
-
+                        menus.stream()
+                                .filter(menu -> menus.indexOf(menu) == categoryNo-1)
+                                .findFirst()
+                                .ifPresent(selectedCategory -> {
                                     while (true) {
-                                        System.out.println(selectedCategory.getItems().get(menuNo - 1));
-                                        System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
-                                        System.out.println("1. 확인       2. 취소");
+                                        System.out.println("[ " + menus.get(categoryNo - 1).getCategoryName().toUpperCase() + " MENU ]");
+                                        selectedCategory.showMenuItems();
+                                        System.out.println();
 
+                                        System.out.print("메뉴를 선택해 주세요: ");
                                         try {
-                                            int inToCart = sc.nextInt();
-                                            if (inToCart == 1) {
-                                                shoppingCart.addItemToCart(selectedCategory.getItems().get(menuNo - 1));
+                                            int menuNo = sc.nextInt();
+                                            System.out.println();
+
+                                            if (menuNo == 0) {
+                                                System.out.println("MAIN MENU 페이지로 이동합니다.");
                                                 System.out.println();
-                                                System.out.println("장바구니에 추가: " + selectedCategory.getItems().get(menuNo - 1).getMenuName());
+                                                break;  //0 입력 시 무한 루프 탈출
+                                            } else if (menuNo > 0 && menuNo <= selectedCategory.getItems().size()) {
+                                                System.out.println("선택한 메뉴: " + selectedCategory.getItems().get(menuNo - 1));
                                                 System.out.println();
 
                                                 while (true) {
-                                                    System.out.println("[ ORDER MENU ]");
-                                                    System.out.println("4. Orders       | 장바구니를 확인 후 주문합니다.");
-                                                    System.out.println("5. Cancel       | 진행 중인 주문을 취소합니다.");
+                                                    System.out.println(selectedCategory.getItems().get(menuNo - 1));
+                                                    System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
+                                                    System.out.println("1. 확인       2. 취소");
 
                                                     try {
-                                                        int orderMenu = sc.nextInt();
-                                                        System.out.println();
+                                                        int inToCart = sc.nextInt();
+                                                        if (inToCart == 1) {
+                                                            shoppingCart.addItemToCart(selectedCategory.getItems().get(menuNo - 1));
+                                                            System.out.println();
+                                                            System.out.println("장바구니에 추가: " + selectedCategory.getItems().get(menuNo - 1).getMenuName());
+                                                            System.out.println();
 
-                                                        if (orderMenu == 4) {
                                                             while (true) {
-                                                                System.out.println("아래와 같이 주문하시겠습니까?");
-                                                                System.out.println();
-                                                                System.out.println("[ Orders ]");
-                                                                shoppingCart.showItemsInCart();
-
-                                                                System.out.println("[ Total Price ]");
-                                                                double totalPrice = 0;
-                                                                for (int i=0; i < shoppingCart.getCartList().size(); i++) {
-                                                                    totalPrice += priceParser(shoppingCart.getCartList().get(i).getPrice());
-                                                                }
-
-                                                                System.out.println("W " + totalPrice);
-                                                                System.out.println();
-                                                                System.out.println("1. 주문       2. 메뉴판");
+                                                                System.out.println("[ ORDER MENU ]");
+                                                                System.out.println("4. Orders       | 장바구니를 확인 후 주문합니다.");
+                                                                System.out.println("5. Cancel       | 장바구니의 특정 메뉴를 삭제합니다.");
 
                                                                 try {
-                                                                    int order = sc.nextInt();
+                                                                    int orderMenu = sc.nextInt();
                                                                     System.out.println();
 
-                                                                    if (order == 1) {
+                                                                    if (orderMenu == 4) {
                                                                         while (true) {
-                                                                            System.out.println("할인 정보를 입력해주세요.");
-                                                                            System.out.println("1. 국가유공자 : 10%");
-                                                                            System.out.println("2. 군인 : 5%");
-                                                                            System.out.println("3. 학생 : 3%");
-                                                                            System.out.println("4. 일반 : 0%");
+                                                                            System.out.println("아래와 같이 주문하시겠습니까?");
+                                                                            System.out.println();
+                                                                            System.out.println("[ Orders ]");
+                                                                            shoppingCart.showItemsInCart();
+
+                                                                            System.out.println("[ Total Price ]");
+                                                                            double totalPrice = 0;
+                                                                            for (int i = 0; i < shoppingCart.getCartList().size(); i++) {
+                                                                                totalPrice += priceParser(shoppingCart.getCartList().get(i).getPrice());
+                                                                            }
+
+                                                                            System.out.println("W " + totalPrice);
+                                                                            System.out.println();
+                                                                            System.out.println("1. 주문       2. 메뉴판");
 
                                                                             try {
-                                                                                int discountInfo = sc.nextInt();
+                                                                                int order = sc.nextInt();
                                                                                 System.out.println();
 
-                                                                                UserType userType = UserType.fromNumber(discountInfo);
-                                                                                String discounted = userType.executeDiscount(totalPrice);
-                                                                                System.out.println("주문이 완료되었습니다. 총 금액은 " + discounted + " 입니다.");
-                                                                                shoppingCart.emptyCart();   //주문을 마치면 카트 비우기.
-                                                                                System.out.println();
-                                                                                break;
+                                                                                if (order == 1) {
+                                                                                    while (true) {
+                                                                                        System.out.println("할인 정보를 입력해주세요.");
+                                                                                        System.out.println("1. 국가유공자 : 10%");
+                                                                                        System.out.println("2. 군인 : 5%");
+                                                                                        System.out.println("3. 학생 : 3%");
+                                                                                        System.out.println("4. 일반 : 0%");
+
+                                                                                        try {
+                                                                                            int discountInfo = sc.nextInt();
+                                                                                            System.out.println();
+
+                                                                                            UserType userType = UserType.fromNumber(discountInfo);
+                                                                                            String discounted = userType.executeDiscount(totalPrice);
+                                                                                            System.out.println("주문이 완료되었습니다. 총 금액은 " + discounted + " 입니다.");
+                                                                                            shoppingCart.emptyCart();   //주문을 마치면 카트 비우기.
+                                                                                            System.out.println();
+                                                                                            break;
+                                                                                        } catch (IllegalArgumentException e) {
+                                                                                            System.out.println(e.getMessage());
+                                                                                            System.out.println();
+                                                                                        }
+                                                                                    }
+                                                                                    break;
+
+                                                                                } else if (order == 2) {
+                                                                                    System.out.println("메뉴판으로 돌아갑니다.");
+                                                                                    break;
+                                                                                } else {
+                                                                                    throw new IllegalArgumentException("번호를 다시 입력해 주세요.");
+                                                                                }
                                                                             } catch (IllegalArgumentException e) {
                                                                                 System.out.println(e.getMessage());
                                                                                 System.out.println();
@@ -126,11 +149,39 @@ public class Kiosk {
                                                                         }
                                                                         break;
 
-                                                                    } else if (order == 2) {
-                                                                        System.out.println("메뉴판으로 돌아갑니다.");
-                                                                        break;
-                                                                    } else {
-                                                                        throw new IllegalArgumentException("번호를 다시 입력해 주세요.");
+                                                                    } else if (orderMenu == 5) {
+                                                                        System.out.print("주문을 취소할 메뉴명을 입력해 주세요 : ");
+                                                                        sc.nextLine();  // 개행 문자 제거.
+
+                                                                            while (true) {
+                                                                                String wantRemove = sc.nextLine();
+
+                                                                                boolean removeMenu = shoppingCart.getCartList().stream().
+                                                                                        anyMatch(menuItem -> menuItem.getMenuName().equals(wantRemove));
+
+                                                                                if (removeMenu) {
+                                                                                    shoppingCart.getCartList().stream()
+                                                                                            .filter(menuItem -> menuItem.getMenuName().equals(wantRemove))
+                                                                                            .findFirst()
+                                                                                            .ifPresent(menuItem -> {
+                                                                                                shoppingCart.getCartList().remove(menuItem);
+                                                                                            });
+                                                                                    System.out.println();
+                                                                                    System.out.println(wantRemove + " 메뉴를 삭제하였습니다.");
+                                                                                    System.out.println();
+                                                                                    break;
+                                                                                } else {
+                                                                                    System.out.println();
+                                                                                    System.out.println("장바구니에 존재하지 않는 메뉴입니다.");
+                                                                                    System.out.println("메뉴명을 정확하게 입력해 주세요 :)");
+                                                                                    System.out.println();
+                                                                                    System.out.print("주문 취소할 메뉴 명 입력: ");
+                                                                                }
+                                                                            }
+                                                                            break;
+                                                                        }
+                                                                    else {
+                                                                        throw new IllegalArgumentException("잘못된 숫자를 입력하셨습니다.");
                                                                     }
                                                                 } catch (IllegalArgumentException e) {
                                                                     System.out.println(e.getMessage());
@@ -139,14 +190,12 @@ public class Kiosk {
                                                             }
                                                             break;
 
-                                                        } else if (orderMenu == 5) {
-                                                            System.out.println("진행 중인 주문을 취소합니다.");
-                                                            //주문 취소 시, 가장 최근에 장바구니에 넣었던 메뉴 삭제
-                                                            shoppingCart.getCartList().remove(shoppingCart.getCartList().size()-1);
+                                                        } else if (inToCart == 2) {
+                                                            System.out.println("장바구니에 해당 메뉴를 추가하지 않습니다.");
                                                             System.out.println();
                                                             break;
                                                         } else {
-                                                            throw new IllegalArgumentException("잘못된 숫자를 입력하셨습니다.");
+                                                            throw new IllegalArgumentException("잘못된 입력입니다.");
                                                         }
                                                     } catch (IllegalArgumentException e) {
                                                         System.out.println(e.getMessage());
@@ -155,29 +204,15 @@ public class Kiosk {
                                                 }
                                                 break;
 
-                                            } else if (inToCart == 2) {
-                                                System.out.println("장바구니에 해당 메뉴를 추가하지 않습니다.");
-                                                System.out.println();
-                                                break;
                                             } else {
-                                                throw new IllegalArgumentException("잘못된 입력입니다.");
+                                                throw new IllegalArgumentException("다른 메뉴를 선택해 주세요 :)");
                                             }
                                         } catch (IllegalArgumentException e) {
                                             System.out.println(e.getMessage());
                                             System.out.println();
                                         }
                                     }
-                                    break;
-
-                                } else {
-                                    throw new IllegalArgumentException("다른 메뉴를 선택해 주세요 :)");
-                                }
-                            } catch (IllegalArgumentException e) {
-                                System.out.println(e.getMessage());
-                                System.out.println();
-                            }
-                        }
-
+                                });
                     } else {
                         throw new IllegalArgumentException("다른 카테고리를 선택해 주세요 :)");
                     }
@@ -189,6 +224,7 @@ public class Kiosk {
     }
 
     //String(price) -> double 타입으로 파싱하는 메서드.
+    //정규표현식 사용.
     public double priceParser(String price) {
         String number = price.replaceAll("[^0-9.]", "");
         return Double.parseDouble(number);
